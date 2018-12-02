@@ -30,7 +30,8 @@ int main(int argc, char **argv)
   int f;
   
   uuid_create(&u);
-  printf("uuid_create(): "); puid(u);
+  printf("uuid_create(): ");
+  puid(u);
   
   f = uuid_compare(&u, &u);
   printf("uuid_compare(u,u): %d\n", f);     /* should be 0 */
@@ -38,7 +39,14 @@ int main(int argc, char **argv)
   printf("uuid_compare(u, NameSpace_DNS): %d\n", f); /* s.b. 1 */
   f = uuid_compare(&NameSpace_DNS, &u);
   printf("uuid_compare(NameSpace_DNS, u): %d\n", f); /* s.b. -1 */
+  // Should result in 3d813cbb-47fb-32ba-91df-831e1593ac29
   uuid_create_md5_from_name(&u, NameSpace_DNS, "www.widgets.com", 15);
-  printf("uuid_create_md5_from_name(): "); puid(u);
+  printf("uuid_create_md5_from_name(dns, www.widgets.com): ");
+  puid(u);
+  // should result in 74738ff5-5367-5958-9aee-98fffdcd1876
+  uuid_create_sha1_from_name(&u, NameSpace_DNS, "www.example.org", 15);
+  printf("uuid_create_sha1_from_name(dns, www.example.org): ");
+  puid(u);
+  
   return 0;
 }
