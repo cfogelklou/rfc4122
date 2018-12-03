@@ -87,11 +87,13 @@ void get_random_info(char seed[16])
   srand(t);
   SHA1_Update(&ctx, &t, sizeof(t));
   uint16_t r[32];
-  for (int i = 0; i < sizeof(r); i++){
+  for (int i = 0; i < 32; i++) {
     r[i] = rand() & 0xffff;
   }
-  SHA1_Update(&ctx, r , sizeof(r));
-  SHA1_Final((uint8_t *)seed, &ctx);
+  SHA1_Update(&ctx, r, sizeof(r));
+  uint8_t tmp[20];
+  SHA1_Final(tmp, &ctx);
+  memcpy(seed, tmp, 16);
 }
 
 
@@ -118,7 +120,7 @@ void SHA1_Update(SHA_CTX *pCtx, void * const buf, const size_t bufSize){
   mbedtls_sha1_update_ret(pCtx, buf, bufSize);
 }
 
-void SHA1_Final(uint8_t seed[16], SHA_CTX *pCtx){
+void SHA1_Final(uint8_t seed[20], SHA_CTX *pCtx){
   mbedtls_sha1_finish_ret(pCtx, seed);
   mbedtls_sha1_free(pCtx);
 }

@@ -17,6 +17,29 @@
 #endif
 
 
+#if (WININC > 0)
+
+#define HTONS(n) (((((unsigned short)(n) & 0xFF)) << 8) | (((unsigned short)(n) & 0xFF00) >> 8))
+#define NTOHS(n) (((((unsigned short)(n) & 0xFF)) << 8) | (((unsigned short)(n) & 0xFF00) >> 8))
+
+#define HTONL(n) (((((unsigned long)(n) & 0xFF)) << 24) | \
+                  ((((unsigned long)(n) & 0xFF00)) << 8) | \
+                  ((((unsigned long)(n) & 0xFF0000)) >> 8) | \
+                  ((((unsigned long)(n) & 0xFF000000)) >> 24))
+
+#define NTOHL(n) (((((unsigned long)(n) & 0xFF)) << 24) | \
+                  ((((unsigned long)(n) & 0xFF00)) << 8) | \
+                  ((((unsigned long)(n) & 0xFF0000)) >> 8) | \
+                  ((((unsigned long)(n) & 0xFF000000)) >> 24))
+
+#define htons(n) HTONS(n)
+#define ntohs(n) NTOHS(n)
+
+#define htonl(n) HTONL(n)
+#define ntohl(n) NTOHL(n)
+#endif
+
+
 //#include "global.h"
 /* change to point to where MD5 .h's live; RFC 1321 has sample
  implementation */
@@ -61,7 +84,7 @@ void MD5Final(uint8_t seed[16], MD5_CTX *pCtx);
 
 void SHA1_Init(SHA_CTX *pCtx);
 void SHA1_Update(SHA_CTX *pCtx, void * const buf, const size_t bufSize);
-void SHA1_Final(uint8_t seed[16], SHA_CTX *pCtx);
+void SHA1_Final(uint8_t seed[20], SHA_CTX *pCtx);
 
 #ifdef __cplusplus
 }
