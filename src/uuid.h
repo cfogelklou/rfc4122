@@ -55,5 +55,5 @@ int uuid_compare(uuid_t *u1, uuid_t *u2);
 }
 #endif
 
-    
+
 #endif // #ifndef RFC4122_UUID_H__
