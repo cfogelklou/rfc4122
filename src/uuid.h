@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 typedef struct rfc4122_uuid_tag{
+  // pass all words as host endianness, will be converted to BE internally.
   unsigned32  time_low;
   unsigned16  time_mid;
   unsigned16  time_hi_and_version;
