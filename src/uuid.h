@@ -4,15 +4,22 @@
 
 #include <stdint.h>
 
-#undef uuid_t
-typedef struct {
+typedef struct rfc4122_uuid_tag{
   unsigned32  time_low;
   unsigned16  time_mid;
   unsigned16  time_hi_and_version;
   unsigned8   clock_seq_hi_and_reserved;
   unsigned8   clock_seq_low;
   byte        node[6];
-} uuid_t;
+} rfc4122_uuid_t;
+
+#ifndef uuid_t
+#define uuid_t rfc4122_uuid_t
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* uuid_create -- generate a UUID */
 int uuid_create(uuid_t * uuid);
@@ -44,4 +51,9 @@ void uuid_create_sha1_from_name(
  */
 int uuid_compare(uuid_t *u1, uuid_t *u2);
 
+#ifdef __cplusplus
+}
+#endif
+
+    
 #endif // #ifndef RFC4122_UUID_H__
