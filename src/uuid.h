@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 
+// Include "sysdep.h" before "uuid.h" for unsigned32, etc.
 typedef struct rfc4122_uuid_tag{
   // pass all words as host endianness, will be converted to BE internally.
   unsigned32  time_low;
@@ -14,9 +15,8 @@ typedef struct rfc4122_uuid_tag{
   byte        node[6];
 } rfc4122_uuid_t;
 
-#ifndef uuid_t
+#undef uuid_t
 #define uuid_t rfc4122_uuid_t
-#endif
 
 #ifdef __cplusplus
 extern "C" {
