@@ -15,7 +15,10 @@ jobs:
         os: [ubuntu-latest, macos-latest]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Recursive Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Cmake
         run: |
