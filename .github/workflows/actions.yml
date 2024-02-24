@@ -1,0 +1,35 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [master, devel]
+  pull_request:
+    branches: [master, devel]
+
+jobs:
+  build_and_test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Recursive Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Cmake
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+
+      - name: Build
+        working-directory: build
+        run: make -j4
+
+      - name: Test
+        working-directory: build
+        run: ./uuid
