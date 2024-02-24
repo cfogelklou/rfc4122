@@ -1,0 +1,32 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [main, devel, feat/chfo/240224_ga]
+  pull_request:
+    branches: [main, devel]
+
+jobs:
+  build_and_test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cmake
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+
+      - name: Build
+        working-directory: build
+        run: make -j4
+
+      - name: Test
+        working-directory: build
+        run: ./uuid
