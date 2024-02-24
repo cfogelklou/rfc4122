@@ -2,9 +2,9 @@ name: Build and Test
 
 on:
   push:
-    branches: [main, devel, feat/chfo/240224_ga]
+    branches: [master, devel]
   pull_request:
-    branches: [main, devel]
+    branches: [master, devel]
 
 jobs:
   build_and_test:
